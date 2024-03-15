@@ -1,52 +1,39 @@
 import pandas as pd
-import boto3
-from botocore.exceptions import NoCredentialsError
+
 from birthday_card_generator import *
 from birthday_wish_generator import *
-from birtday_message_generator import *
+from birthday_message_generator import *
 from mail_sender import *
-
-def upload_to_s3(local_file, bucket, s3_file):
-    s3 = boto3.client('s3')
-
-    try:
-        s3.upload_file(local_file, bucket, s3_file)
-        print(f"Upload Successful. File uploaded to https://{bucket}.s3.amazonaws.com/{s3_file}")
-        return True
-    except FileNotFoundError:
-        print("The file was not found")
-        return False
-    except NoCredentialsError:
-        print("Credentials not available")
-        return False
-    
-def upload_birthday_file(file):
-    target_file = file.split('/')[1]
-    upload_to_s3(file, 'birthday-poc', target_file)
+from s3client import *
 
 
-def handle_birthday(name, email, years):
+def handle_birthday(name, email, years, birthday):
     print('\r\nHappy ' + years + ' Birthday '+ name)
 
     # current year as string
     current_year = str(pd.to_datetime('today').year)
     filename_prefix = current_year + '-birthday-' + name
 
-    birthday_card_file = 'cards/' + filename_prefix + '.jpg'
-    birthday_message_file = 'cards/' + filename_prefix + '.html'
+    birthday_card_filename = filename_prefix + '.jpg'
+    birthday_page_filename = filename_prefix + '.html'
+
+    birthday_card_file = 'cards/' + birthday_card_filename
+    birthday_page_file = 'cards/' + birthday_page_filename
 
     generate_birthday_card(name, birthday_card_file)    
 
     birthday_wish = generate_birthday_wish(name)
 
-    html_message = generate_birthday_html_message(name, birthday_card_file, birthday_wish)
-    with open(birthday_message_file, 'w') as file:
+    html_message = generate_birthday_html_page(name, birthday_card_filename, birthday_wish)
+    with open(birthday_page_file, 'w') as file:
         file.write(html_message)
 
-    upload_birthday_file(birthday_card_file)
-    upload_birthday_file(birthday_message_file)
-
-    send_birthday_email(name, html_message, [birthday_card_file, birthday_message_file])
+    birthday_card_link = upload_birthday_card(birthday_card_file, birthday_card_filename)
+    birthday_page_link = upload_birthday_page(birthday_page_file, birthday_page_filename)
+    
+    card_link = birthday_page_link
+    attachments = [birthday_card_file]
+    send_birthday_email(name, birthday, card_link, attachments)
 
         
 # read the CSV file
@@ -69,8 +56,9 @@ for index, row in df.iterrows():
     days_after = (now - prev_birthday).days
     years = str(now.year - pd.to_datetime(birthday).year)
 
+    bd = next_birthday.strftime("%Y-%m-%d")
     if (days_until == 0):
-       handle_birthday(name, row['email'], years)
+       handle_birthday(name, row['email'], years, bd)
         
     # print('\nName: ' + name)
     # print('Birthday: ' + birthday)

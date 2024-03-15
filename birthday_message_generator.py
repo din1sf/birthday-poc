@@ -1,11 +1,4 @@
-import base64
 
-# generate image to base64 format
-def image_to_Base64_format(filename):
-    with open(filename, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-        return encoded_string.decode('utf-8')
-    
 def default_message_template(): 
     return """<html>
     <head></head>
@@ -17,9 +10,7 @@ def default_message_template():
     </html>
     """
 
-def generate_birthday_html_message(name, card_file, wish):
-    base64_image = image_to_Base64_format(card_file)
-
+def generate_birthday_html_page(name, card_file_name, wish):
     try:
         # load the template from a file utf-8
         with open('birthday_message_template.html', 'r', encoding='utf-8') as file:
@@ -27,7 +18,7 @@ def generate_birthday_html_message(name, card_file, wish):
     except FileNotFoundError:
         tmp = default_message_template()
 
-    image = 'data:image/jpeg;base64, {base64_image}'.format(base64_image=base64_image)
+    image = card_file_name
     tmp = tmp.replace('{{name}}', name)
     tmp = tmp.replace('{{message}}', wish)
     tmp = tmp.replace('{{image}}', image)

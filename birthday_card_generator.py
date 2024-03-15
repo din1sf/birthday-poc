@@ -31,9 +31,6 @@ def generate_image(prompt):
 
 def download_file(url, filename):
     print('downloading file: ' + filename + ' from ' + url)
-    # ensure directory exists
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-
     with open(filename, "wb") as file:
         response = requests.get(url)
         file.write(response.content)
