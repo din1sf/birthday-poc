@@ -129,10 +129,9 @@ def send_birthday_email(name, date, card_link, attachments, email):
     send_email_with_attachment(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html, attachments) 
 
 
-
-# name = 'Nikolay'
-# date = '2024-03-15'
-# card_link = 'https://birthday-poc.s3.eu-central-1.amazonaws.com/2024-birthday-Eva.html'
-# attachments = ['cards/birthday_card.jpg']
-# send_birthday_email(name, date, card_link, attachments, '1153nikidimitrov@gmail.com')
-# print('done')
+name = 'Eve'
+date = '2024-03-15'
+card_link = 'https://birthday-poc.s3.eu-central-1.amazonaws.com/demo.html'
+attachments = ['cards/demo.jpg']
+send_birthday_email(name, date, card_link, attachments, '1153nikidimitrov@gmail.com')
+print('done')
