@@ -56,7 +56,8 @@ for index, row in df.iterrows():
     days_after = (now - prev_birthday).days
     years = str(now.year - pd.to_datetime(birthday).year)
 
-    bd = next_birthday.strftime("%Y-%m-%d")
+    # format dd month yyyy
+    bd = next_birthday.strftime("%d %B %Y")
     if (days_until == 0):
        handle_birthday(name, row['email'], years, bd)
         
