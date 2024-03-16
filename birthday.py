@@ -1,8 +1,8 @@
 import pandas as pd
 
-from birthday_card_generator import *
-from birthday_wish_generator import *
-from birthday_message_generator import *
+from generator_birthday_card import *
+from generator_birthday_wish import *
+from generator_birthday_page import *
 from mail_sender import *
 from s3client import *
 
@@ -30,10 +30,10 @@ def handle_birthday(name, email, years, birthday):
 
     birthday_card_link = upload_birthday_card(birthday_card_file, birthday_card_filename)
     birthday_page_link = upload_birthday_page(birthday_page_file, birthday_page_filename)
-    
+
     card_link = birthday_page_link
     attachments = [birthday_card_file]
-    send_birthday_email(name, birthday, card_link, attachments)
+    send_birthday_email(name, birthday, card_link, attachments, email)
 
         
 # read the CSV file

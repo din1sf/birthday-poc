@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 def generate_birthday_wish(name):
     try:
-        with open('birthday_wish_template.txt', 'r') as file:
+        with open('prompt_birthday_wish.txt', 'r') as file:
             prompt = file.read()
     except FileNotFoundError:
         prompt = 'Happy Birthday {name}!'

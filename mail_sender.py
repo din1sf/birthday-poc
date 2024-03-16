@@ -5,7 +5,6 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 import pandas as pd
 import os
-import base64
 
 def send_email_with_attachment(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html, attachments):
     # Create a new SES client
@@ -102,8 +101,7 @@ def send_email(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_
 
 def generate_birthday_email_content(name, card_link):
     try:
-        # load the template from a file utf-8
-        with open('birthday_remainder_template.html', 'r', encoding='utf-8') as file:
+        with open('template_birthday_email.html', 'r', encoding='utf-8') as file:
             tmp = file.read()
     except FileNotFoundError:
         print('File not found')
@@ -113,22 +111,21 @@ def generate_birthday_email_content(name, card_link):
 
     return tmp
 
-def send_birthday_email(name, date, card_link, attachments):
+def send_birthday_email(name, date, card_link, attachments, email):
     df = pd.read_csv('ses-smtp-user.csv')
 
     aws_access_key_id = df['Access key ID'][0]
     aws_secret_access_key = df['Secret access key'][0]
     aws_region = 'eu-central-1'
 
-    # sender = '1153nikidimitrov@gmail.com'
-    # recipient = '1153nikidimitrov@gmail.com'
-    sender = 'nikolay.dimitrov@bosch.com'
-    recipient = 'nikolay.dimitrov@bosch.com'
+    sender = email
+    recipient = email
     subject = "Birthday reminder " + name + " " + date
     body_text = "Happy Birthday " + name
     body_html = generate_birthday_email_content(name, card_link)
 
     # send_email(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html)
+    print('Sending email to ' + recipient)
     send_email_with_attachment(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html, attachments) 
 
 
@@ -137,5 +134,5 @@ def send_birthday_email(name, date, card_link, attachments):
 # date = '2024-03-15'
 # card_link = 'https://birthday-poc.s3.eu-central-1.amazonaws.com/2024-birthday-Eva.html'
 # attachments = ['cards/birthday_card.jpg']
-# send_birthday_email(name, date, card_link, attachments)
+# send_birthday_email(name, date, card_link, attachments, '1153nikidimitrov@gmail.com')
 # print('done')

@@ -1,10 +1,9 @@
 from openai import OpenAI 
 import requests
-import os
 
 def generate_birthday_card(name, filename='birthday_card.jpg'):
     try:
-        with open('birthday_card_prompt.txt', 'r') as file:
+        with open('prompt_birthday_card.txt', 'r') as file:
             prompt = file.read()
     except FileNotFoundError:
         prompt = 'Happy Birthday {name}!'
@@ -37,4 +36,4 @@ def download_file(url, filename):
     print('file downloaded: ' + filename)
 
 
-# generate_birthday_card('Nikolay', 'cards/card.jpg')
+# generate_birthday_card('Pesho', 'cards/Pesho.jpg')
