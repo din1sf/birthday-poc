@@ -37,4 +37,5 @@ env/
 
 cards/
 ses-smtp-user.csv
+local-settings.yaml
 ```

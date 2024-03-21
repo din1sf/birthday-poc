@@ -1,7 +1,6 @@
-
-import os
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
+from birthday_utils import load_settings
 
 def generate_birthday_wish(name):
     try:
@@ -16,10 +15,10 @@ def generate_birthday_wish(name):
 
 
 def generate(system, user, params):
-    openai_api_key = os.environ.get("OPENAI_API_KEY")
-    if openai_api_key is None:
-        raise ValueError("OpenAI API key is not set in the environment variable OPENAI_API_KEY")
-    llm = ChatOpenAI(openai_api_key=openai_api_key)
+    settings = load_settings()
+    api_key = settings['openai']['api-key']
+
+    llm = ChatOpenAI(openai_api_key=api_key)
     
     prompt = ChatPromptTemplate.from_messages([
         ("system", system),

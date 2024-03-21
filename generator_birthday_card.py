@@ -1,5 +1,6 @@
 from openai import OpenAI 
 import requests
+from birthday_utils import load_settings
 
 def generate_birthday_card(name, filename='birthday_card.jpg'):
     try:
@@ -16,9 +17,13 @@ def generate_birthday_card(name, filename='birthday_card.jpg'):
     download_file(image_url, filename)
 
 def generate_image(prompt):
-    client = OpenAI()
+    settings = load_settings()
+    api_key = settings['openai']['api-key']
+    image_model = settings['openai']['image-model']
+
+    client = OpenAI(api_key=api_key)
     response = client.images.generate(
-        model="dall-e-3",
+        model=image_model,
         prompt=prompt,
         size="1024x1024",
         quality="standard",
@@ -36,4 +41,4 @@ def download_file(url, filename):
     print('file downloaded: ' + filename)
 
 
-# generate_birthday_card('Pesho', 'cards/Pesho.jpg')
+# generate_birthday_card('Pesho', 'cards/1.jpg')

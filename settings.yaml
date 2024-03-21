@@ -1,0 +1,16 @@
+
+aws.ses:
+  aws-access-key-id: <your-access-key-id>
+  aws-secret-key: <your-secret-key>
+  region: <your-region>
+  sender-email: <your-sender-email>
+
+aws.s3:
+  aws-access-key-id: <your-access-key-id>
+  aws-secret-key: <your-secret-key>
+  region: <your-region>
+  bucket-name: <your-bucket-name>
+
+openai:
+  api-key: <your-api-key>
+  image-model: dall-e-3

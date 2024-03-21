@@ -3,8 +3,8 @@ from botocore.exceptions import ClientError
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
-import pandas as pd
 import os
+from birthday_utils import load_settings
 
 def send_email_with_attachment(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html, attachments):
     # Create a new SES client
@@ -111,27 +111,24 @@ def generate_birthday_email_content(name, card_link):
 
     return tmp
 
-def send_birthday_email(name, date, card_link, attachments, email):
-    df = pd.read_csv('ses-smtp-user.csv')
+def send_birthday_email(name, date, card_link, attachments, recipient):
+    settings = load_settings()
+    aws_access_key_id = settings['aws.ses']['aws-access-key-id']
+    aws_secret_access_key = settings['aws.ses']['aws-secret-key']
+    aws_region = settings['aws.ses']['region']
+    sender = settings['aws.ses']['sender-email']
 
-    aws_access_key_id = df['Access key ID'][0]
-    aws_secret_access_key = df['Secret access key'][0]
-    aws_region = 'eu-central-1'
-
-    sender = email
-    recipient = email
     subject = "Birthday reminder " + name + " " + date
     body_text = "Happy Birthday " + name
     body_html = generate_birthday_email_content(name, card_link)
 
-    # send_email(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html)
     print('Sending email to ' + recipient)
     send_email_with_attachment(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html, attachments) 
 
 
 # name = 'Eve'
 # date = '2024-03-15'
-# card_link = 'https://birthday-poc.s3.eu-central-1.amazonaws.com/demo.html'
+# card_link = 'https://birthday-poc.s3.eu-central-1.amazonaws.com/index.html'
 # attachments = ['cards/demo.jpg']
 # send_birthday_email(name, date, card_link, attachments, '1153nikidimitrov@gmail.com')
 # print('done')
