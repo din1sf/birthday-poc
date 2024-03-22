@@ -59,7 +59,7 @@ def send_email_with_attachment(aws_access_key_id, aws_secret_access_key, sender,
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        print("Email sent! Message ID:", response['MessageId'])
+        print("  Email sent to " + recipient)
     
 def send_email(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html):
     # Create a new SES client
@@ -97,7 +97,7 @@ def send_email(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        print("Email sent! Message ID:", response['MessageId'])
+        print("  Email sent! Message ID:", response['MessageId'])
 
 def generate_birthday_email_content(name, card_link):
     try:
@@ -122,7 +122,7 @@ def send_birthday_email(name, date, card_link, attachments, recipient):
     body_text = "Happy Birthday " + name
     body_html = generate_birthday_email_content(name, card_link)
 
-    print('Sending email to ' + recipient)
+    print('  Sending email to ' + recipient)
     send_email_with_attachment(aws_access_key_id, aws_secret_access_key, sender, recipient, aws_region, subject, body_text, body_html, attachments) 
 
 

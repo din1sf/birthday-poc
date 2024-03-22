@@ -12,7 +12,7 @@ def generate_birthday_card(name, filename='birthday_card.jpg'):
     # treat prompt as a template and replace {name} with the actual name
     prompt = prompt.format(name=name)
     
-    print('generating birthday card for: ' + name)
+    print('  Generating birthday card for: ' + name)
     image_url = generate_image(prompt)
     download_file(image_url, filename)
 
@@ -34,11 +34,11 @@ def generate_image(prompt):
     return image_url
 
 def download_file(url, filename):
-    print('downloading file: ' + filename + ' from ' + url)
+    print('  Downloading file: ' + filename)
     with open(filename, "wb") as file:
         response = requests.get(url)
         file.write(response.content)
-    print('file downloaded: ' + filename)
+    print('  File downloaded: ' + filename)
 
 
 # generate_birthday_card('Pesho', 'cards/1.jpg')

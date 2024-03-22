@@ -38,4 +38,6 @@ env/
 cards/
 ses-smtp-user.csv
 local-settings.yaml
+birthdays.csv
+remote-birthdays.csv
 ```

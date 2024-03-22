@@ -34,9 +34,10 @@ These instructions will get you a copy of the project up and running on your loc
 3. Edit settings.yaml
 
 ### Usage
-
-1. Update the `birthdays.csv` file with the names, birthdays, and email addresses of the people you want to send birthday wishes to.
-2. Run the `birthday.py` script.
+1. Run the `birthday.py` script with specific file name
+python3 birthday.py --file <csv file>
+2. Run the `birthday.py` script with downloaded file from S3 bucket
+python3 birthday.py --remote 
 
 ## Code Overview
 
