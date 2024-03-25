@@ -1,5 +1,6 @@
 import pandas as pd
 import argparse
+from datetime import datetime
 from generator_birthday_card import *
 from generator_birthday_wish import *
 from generator_birthday_page import *
@@ -70,6 +71,10 @@ def handle_birthday_file(file):
 
     print('Done')
 
+
+# print current time
+
+print('Running on ' + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 file='birthdays.csv'
 remote = False
 
