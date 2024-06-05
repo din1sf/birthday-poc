@@ -54,7 +54,7 @@ def handle_birthday_file(file):
             next_birthday = next_birthday.replace(year=now.year + 1)
         days_until = (next_birthday - now).days
         days_after = (now - prev_birthday).days
-        print('\r\nChecking birthday for ' + name + ' on ' + str(next_birthday) + ' (' + str(days_until) + ' days)')
+        # print('\r\nChecking birthday for ' + name + ' on ' + str(next_birthday) + ' (' + str(days_until) + ' days)')
         years = str(now.year - pd.to_datetime(birthday).year)
 
         # format dd month yyyy

@@ -13,4 +13,5 @@ aws.s3:
 
 openai:
   api-key: <your-api-key>
+  model: gpt-4-turbo
   image-model: dall-e-3
