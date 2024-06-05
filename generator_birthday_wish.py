@@ -18,7 +18,7 @@ def generate(system, user, params):
     settings = load_settings()
     api_key = settings['openai']['api-key']
 
-    llm = ChatOpenAI(openai_api_key=api_key)
+    llm = ChatOpenAI(openai_api_key=api_key, model='gpt-4o')
     
     prompt = ChatPromptTemplate.from_messages([
         ("system", system),
@@ -29,4 +29,4 @@ def generate(system, user, params):
     result = chain.invoke(params)
     return result.content
 
-# print(generate_birthday_wish('Nikolay'))
+print(generate_birthday_wish('Nikolay'))

@@ -47,12 +47,14 @@ def handle_birthday_file(file):
         now = pd.to_datetime('today').normalize()
 
         # calculate the number of days until the next birthday
-        next_birthday = pd.to_datetime(birthday).replace(year=now.year)
+        next_birthday = pd.to_datetime(birthday, format='%d.%m.%y').replace(year=now.year)
+        
         prev_birthday = next_birthday
         if now > next_birthday:
             next_birthday = next_birthday.replace(year=now.year + 1)
         days_until = (next_birthday - now).days
         days_after = (now - prev_birthday).days
+        print('\r\nChecking birthday for ' + name + ' on ' + str(next_birthday) + ' (' + str(days_until) + ' days)')
         years = str(now.year - pd.to_datetime(birthday).year)
 
         # format dd month yyyy
