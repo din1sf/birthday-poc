@@ -32,4 +32,4 @@ def generate(system, user, params):
     result = chain.invoke(params)
     return result.content
 
-print(generate_birthday_wish('Nikolay'))
+# print(generate_birthday_wish('Nikolay'))
